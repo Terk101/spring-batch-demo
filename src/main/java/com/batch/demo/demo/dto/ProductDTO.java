@@ -1,25 +1,13 @@
-package com.batch.demo.demo.domain.h2;
+package com.batch.demo.demo.dto;
 
-
-import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "ProductH2")
-public class ProductH2 {
-    @Id
-    @Column(name = "PName", nullable = false)
+public class ProductDTO implements Serializable {
     private String productName;
-
-    @Column(name = "Price", precision = 10)
     private BigDecimal price;
-
-    @Column(name = "Category")
     private String category;
-
-    @ManyToOne
-    @JoinColumn(name = "Manufacturer")
-    private CompanyH2 manufacturer;
+    private String manufacturer;
 
     public String getProductName() {
         return productName;
@@ -45,21 +33,21 @@ public class ProductH2 {
         this.category = category;
     }
 
-    public CompanyH2 getManufacturer() {
+    public String getManufacturer() {
         return manufacturer;
     }
 
-    public void setManufacturer(CompanyH2 manufacturer) {
+    public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
     }
 
     @Override
     public String toString() {
-        return "ProductH2{" +
+        return "ProductDTO{" +
                 "productName='" + productName + '\'' +
                 ", price=" + price +
                 ", category='" + category + '\'' +
-                ", manufacturer=" + manufacturer +
+                ", manufacturer='" + manufacturer + '\'' +
                 '}';
     }
 }

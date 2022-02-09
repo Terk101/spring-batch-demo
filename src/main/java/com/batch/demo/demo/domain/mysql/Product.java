@@ -51,4 +51,14 @@ public class Product {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id='" + id + '\'' +
+                ", price=" + price +
+                ", category='" + category + '\'' +
+                ", manufacturer=" + manufacturer +
+                '}';
+    }
 }

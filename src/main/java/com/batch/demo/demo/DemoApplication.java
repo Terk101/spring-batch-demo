@@ -58,28 +58,28 @@ public class DemoApplication implements CommandLineRunner {
         List<ProductH2> productH2s = new ArrayList<>();
         ProductH2 gizmo = new ProductH2();
         gizmo.setProductName("Gizmo");
-        gizmo.setPrice(BigDecimal.valueOf(19));
+        gizmo.setPrice(BigDecimal.valueOf(300));
         gizmo.setCategory("Gadgets");
         gizmo.setManufacturer(gWorks);
         productH2s.add(gizmo);
 
         ProductH2 powerGizmo = new ProductH2();
-        powerGizmo.setProductName("Power Gizmo");
-        powerGizmo.setPrice(BigDecimal.valueOf(29));
+        powerGizmo.setProductName("Powergizmo");
+        powerGizmo.setPrice(BigDecimal.valueOf(500));
         powerGizmo.setCategory("Gadgets");
         powerGizmo.setManufacturer(gWorks);
         productH2s.add(powerGizmo);
 
         ProductH2 singleTouch = new ProductH2();
         singleTouch.setProductName("SingleTouch");
-        singleTouch.setPrice(BigDecimal.valueOf(149));
+        singleTouch.setPrice(BigDecimal.valueOf(9000));
         singleTouch.setCategory("Photography");
         singleTouch.setManufacturer(cannon);
         productH2s.add(singleTouch);
 
         ProductH2 multiTouch = new ProductH2();
         multiTouch.setProductName("MultiTouch");
-        multiTouch.setPrice(BigDecimal.valueOf(203));
+        multiTouch.setPrice(BigDecimal.valueOf(10000));
         multiTouch.setCategory("Household");
         multiTouch.setManufacturer(hitachi);
         productH2s.add(multiTouch);

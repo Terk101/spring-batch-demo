@@ -1,10 +1,10 @@
 package com.batch.demo.demo.config;
 
 
-import com.batch.demo.demo.dto.AddressDTO;
-import com.batch.demo.demo.mapper.AddressRowMapper;
-import com.batch.demo.demo.mapper.HumanRowMapper;
-import com.batch.demo.demo.dto.HumanDTO;
+import com.batch.demo.demo.domain.mysql.Product;
+import com.batch.demo.demo.dto.ProductDTO;
+
+import com.batch.demo.demo.mapper.ProductRowMapper;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -18,14 +18,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 
 
 @Configuration
 @EnableBatchProcessing
-@Transactional("transactionManager")
 public class JobConfiguration {
 
     @Autowired
@@ -37,21 +35,24 @@ public class JobConfiguration {
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
 
-    @Bean
-    public JdbcCursorItemReader<AddressDTO> jdbcCursorItemReader() {
-        JdbcCursorItemReader<AddressDTO> cursorItemReader = new JdbcCursorItemReader<>();
+    @Autowired
+    private ProductProcessor productProcessor;
 
-        cursorItemReader.setSql("SELECT * FROM address ");
+    @Bean
+    public JdbcCursorItemReader<ProductDTO> jdbcCursorItemReader() {
+        JdbcCursorItemReader<ProductDTO> cursorItemReader = new JdbcCursorItemReader<>();
+
+        cursorItemReader.setSql("SELECT * FROM productH2 ");
         cursorItemReader.setDataSource(dataSource);
-        cursorItemReader.setRowMapper(new AddressRowMapper());
+        cursorItemReader.setRowMapper(new ProductRowMapper());
         return cursorItemReader;
     }
 
     @Bean
-    public ItemWriter<? super Object> itemWriter() {
-        return address -> {
+    public ItemWriter<ProductDTO> itemWriter() {
+        return product -> {
             System.out.println("\nWriting chunk to console");
-            for (Object add : address) {
+            for (Object add : product) {
                 System.out.println(add);
             }
         };
@@ -59,7 +60,9 @@ public class JobConfiguration {
 
     @Bean
     public Step step1() {
-        return this.stepBuilderFactory.get("step1").chunk(3).reader(jdbcCursorItemReader()).writer(itemWriter())
+        return this.stepBuilderFactory.get("step1").<ProductDTO, ProductDTO>chunk(3)
+                .reader(jdbcCursorItemReader()).processor(productProcessor)
+                .writer(itemWriter())
                 .build();
     }
 
