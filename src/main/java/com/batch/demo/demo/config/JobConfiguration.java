@@ -59,16 +59,17 @@ public class JobConfiguration {
     }
 
     @Bean
-    public Step step1() {
+    public Step step1(@Qualifier("transactionManager")PlatformTransactionManager platformTransactionManager) {
         return this.stepBuilderFactory.get("step1").<ProductDTO, ProductDTO>chunk(3)
                 .reader(jdbcCursorItemReader()).processor(productProcessor)
                 .writer(itemWriter())
+                .transactionManager(platformTransactionManager)
                 .build();
     }
 
     @Bean
     public Job myJob(JobRepository jobRepository,  @Qualifier("transactionManager")PlatformTransactionManager platformTransactionManager) {
-        return jobBuilderFactory.get("My-First-Job").start(step1()).build();
+        return jobBuilderFactory.get("My-First-Job").start(step1(platformTransactionManager)).build();
     }
 
 }

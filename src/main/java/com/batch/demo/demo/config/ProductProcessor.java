@@ -20,15 +20,14 @@ public class ProductProcessor implements ItemProcessor<ProductDTO, ProductDTO> {
     @Override
     @Transactional("mysqlTransactionManager")
     public ProductDTO process(ProductDTO productDto) throws Exception {
-        Optional<Product> productOp = productRepository.findById(productDto.getProductName());
-        Product product = productOp.orElse(null);
-        if (Objects.nonNull(product)) {
-            if (!Objects.equals(productDto.getPrice(), product.getPrice())) {
-                product.setPrice(productDto.getPrice());
-                productRepository.save(product);
+
+        return productRepository.findById(productDto.getProductName()).map(p -> {
+            if (!Objects.equals(productDto.getPrice(), p.getPrice())) {
+                p.setPrice(productDto.getPrice());
+                productRepository.save(p);
                 return productDto;
             }
-        }
-        return null;
+            return null;
+        }).orElse(null);
     }
 }
