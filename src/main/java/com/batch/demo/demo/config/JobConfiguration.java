@@ -36,6 +36,9 @@ public class JobConfiguration {
     @Autowired
     private ProductProcessor productProcessor;
 
+    @Autowired
+    private ProductItemWriter productItemWriter;
+
     @Bean
     public JdbcCursorItemReader<ProductDTO> jdbcCursorItemReader() {
         JdbcCursorItemReader<ProductDTO> cursorItemReader = new JdbcCursorItemReader<>();
@@ -60,7 +63,7 @@ public class JobConfiguration {
     public Step step1(@Qualifier("transactionManager")PlatformTransactionManager platformTransactionManager) {
         return this.stepBuilderFactory.get("step1").<ProductDTO, ProductDTO>chunk(3)
                 .reader(jdbcCursorItemReader()).processor(productProcessor)
-                .writer(itemWriter())
+                .writer(productItemWriter)
                 .transactionManager(platformTransactionManager)
                 .build();
     }
