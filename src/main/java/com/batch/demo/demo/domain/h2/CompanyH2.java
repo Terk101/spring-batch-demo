@@ -1,6 +1,9 @@
 package com.batch.demo.demo.domain.h2;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity

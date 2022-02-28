@@ -1,7 +1,6 @@
 package com.batch.demo.demo.config;
 
 
-import com.batch.demo.demo.domain.mysql.Product;
 import com.batch.demo.demo.domain.mysql.ProductRepository;
 import com.batch.demo.demo.dto.ProductDTO;
 import org.springframework.batch.item.ItemProcessor;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class ProductProcessor implements ItemProcessor<ProductDTO, ProductDTO> {

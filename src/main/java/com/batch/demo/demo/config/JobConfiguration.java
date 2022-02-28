@@ -1,9 +1,7 @@
 package com.batch.demo.demo.config;
 
 
-import com.batch.demo.demo.domain.mysql.Product;
 import com.batch.demo.demo.dto.ProductDTO;
-
 import com.batch.demo.demo.mapper.ProductRowMapper;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
